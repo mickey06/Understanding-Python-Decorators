@@ -50,3 +50,37 @@ print "after first Hello2() call"
 Hello2("a", "different", "set of", "arguments")
 print "after second Hello2() call"
 
+
+def a_decorator_passing_arbitrary_arguments(function_to_decorate):
+    # The wrapper accepts any arguments
+    def a_wrapper_accepting_arbitrary_arguments(*args, **kwargs):
+        print "Do I have args?:"
+        print args
+        print kwargs
+        # Then you unpack the arguments, here *args, **kwargs
+        # If you are not familiar with unpacking, check:
+        # http://www.saltycrane.com/blog/2008/01/how-to-use-args-and-kwargs-in-python/
+        function_to_decorate(*args, **kwargs)
+    return a_wrapper_accepting_arbitrary_arguments
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_no_argument():
+    print "Python is cool, no argument here."
+
+function_with_no_argument()
+#outputs
+#Do I have args?:
+#()
+#{}
+#Python is cool, no argument here.
+
+@a_decorator_passing_arbitrary_arguments
+def function_with_arguments(a, b, c):
+    print a, b, c
+
+function_with_arguments(1,2,3)
+#outputs
+#Do I have args?:
+#(1, 2, 3)
+#{}
+#1 2 3

@@ -1,8 +1,14 @@
+"""
+
+Very lightly modified from :
+http://www.artima.com/weblogs/viewpost.jsp?thread=240808
+http://www.artima.com/weblogs/viewpost.jsp?thread=240845
+
+"""
+
 # -*- coding: utf-8 -*-
 
-# Modified from :
-# http://www.artima.com/weblogs/viewpost.jsp?thread=240808
-# http://www.artima.com/weblogs/viewpost.jsp?thread=240845
+print '-' * 5, "functions as decoration mechanisms", '-' * 5
 
 print '>' * 2, "Decoration Setup for decorator with no args"
 
@@ -86,10 +92,11 @@ print "after first Hello2() call"
 Hello2("a", "different", "set of", "arguments")
 print "after second Hello2() call"
 
+print '-' * 5, "classes as decoration mechanisms", '-' * 5
 print '>' * 2, "Decoration Setup for Class decorator without args"
 
 
-class DecoratorNoArgs(object):
+class decorator_no_args(object):
 
     def __init__(self, f):
         """
@@ -109,7 +116,7 @@ class DecoratorNoArgs(object):
         print "After self.f(*args)"
 
 
-@DecoratorNoArgs
+@decorator_no_args
 def say_hello_1(a1, a2, a3, a4):
     print 'say_hello_1 arguments:', a1, a2, a3, a4
 print "Using sugar"
@@ -117,7 +124,7 @@ print "Using sugar"
 
 def say_hello_2(a1, a2, a3, a4):
     print 'sayHello arguments:', a1, a2, a3, a4
-say_hello_2 = DecoratorNoArgs(say_hello_2)
+say_hello_2 = decorator_no_args(say_hello_2)
 print "Without sugar"
 
 print "End of decoration Setup for Class decorator without args"
@@ -135,7 +142,9 @@ say_hello_2("a", "different", "set of", "arguments")
 print "After second say_hello_2() call"
 
 print '>' * 2, "Decoration Setup for Class decorator with args"
-class DecoratorWithArgs(object):
+
+
+class decorator_with_args(object):
 
     def __init__(self, arg1, arg2, arg3):
         """
@@ -162,7 +171,8 @@ class DecoratorWithArgs(object):
             print "After f(*args)"
         return wrapped_f
 
-@DecoratorWithArgs("hello", "world", 42)
+
+@decorator_with_args("hello", "world", 42)
 def say_hello_1(a1, a2, a3, a4):
     print 'say_hello_1 arguments:', a1, a2, a3, a4
 print "Use sugar"
@@ -170,7 +180,7 @@ print "Use sugar"
 
 def say_hello_2(a1, a2, a3, a4):
     print 'say_hello_2 arguments:', a1, a2, a3, a4
-say_hello_2 = DecoratorWithArgs("hello", "world", 42)(say_hello_2)
+say_hello_2 = decorator_with_args("hello", "world", 42)(say_hello_2)
 print "No sugar"
 
 print '>' * 2, "End of Decoration Setup for Class decorator with args"

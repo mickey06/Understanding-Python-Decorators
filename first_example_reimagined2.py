@@ -21,3 +21,38 @@ print "with sugar"
 
 say = wrap_in_tag('b')(wrap_in_tag('i')(say)))
 print "No sugar"
+
+class b(object):
+  def __init__(self, f):
+    self.f = f
+  def __call__(self):
+    return "<b>{}</b>".format(self.f())
+
+
+class i(object):
+  def __init__(self, f):
+    self.f = f
+  def __call__(self):
+    return "<i>{}</i>".format(self.f())
+
+
+@b
+@i
+def sayhi():
+  return 'hi'
+
+
+class style(object):
+  def __init__(self, tag):
+    self.tag = tag
+  def __call__(self, f):
+    def newf(*args):
+      return "<{tag}>{res}</{tag}>".format(res=f(*args), tag=self.tag)
+    return newf
+
+
+@style('b')
+@style('i')
+def say(val):
+  return str(val)
+
